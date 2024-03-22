@@ -8,8 +8,12 @@ def plot_a(interval: np.ndarray = np.linspace(-4, 4, 1000)):
     plt.figure(figsize=(8, 6))
     
     for n in range(2, 6):
+
+        # Create Lagrange polynomial
         points_a = divide_interval(interval, n)
         x = scipy.interpolate.lagrange(points_a, f_a(points_a))
+
+        # Create subplots
         plt.plot(interval, x(interval), label=f'n = {n}')
         plt.plot(points_a, f_a(points_a), 'o', label='Puntos de interpolación')
         plt.plot(np.linspace(-4, 4, 100), x(np.linspace(-4, 4, 100)), label='Polinomio interpolante')
@@ -34,7 +38,7 @@ def plot_b(x1: np.ndarray = np.linspace(-1, 1, 100), x2: np.ndarray = np.linspac
 
 
 
-def interpolated_b(x1: np.ndarray = np.linspace(-1, 1, 100), x2: np.ndarray = np.linspace(-1, 1, 100)):
+def interpolated_b(x1: np.ndarray = np.linspace(-1, 1, 10), x2: np.ndarray = np.linspace(-1, 1, 10)):
     grid_x, grid_y = np.meshgrid(x1, x2)
     grid_z = scipy.interpolate.griddata((grid_x.flatten(), grid_y.flatten()), f_b(grid_x, grid_y).flatten(), (grid_x, grid_y), method='linear')
     
@@ -52,11 +56,18 @@ def divide_interval(interval: np.ndarray, n: int) -> np.ndarray:
     points = np.linspace(interval[0], interval[-1], num=n)
     return points
 
+def calculate_error(f, g, interval):
+    return scipy.integrate.quad(lambda x: abs((f(x) - g(x))), interval[0], interval[-1])
+
 def main():
-    plot_a()
-    plot_b()
-    
-    interpolated_b()
+    # plot_a()
+    # plot_b()
+    # interpolated_b()
+    for n in range (2, 9):
+        points_a = divide_interval(np.linspace(-4, 4, 100), n)
+        g = scipy.interpolate.lagrange(points_a, f_a(points_a))
+        print(f'Error para f_a(x) con n = {n}: {calculate_error(f_a, g, np.linspace(-4, 4, 100))}')
+
     
 if __name__ == "__main__":
     main()
