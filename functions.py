@@ -2,7 +2,7 @@ import numpy as np
 
 # DomFa = [-4, 4]
 def f_a(x): 
-    return 0.3 ** np.linalg.norm(x) * np.sin(4 * x) - np.tanh(2 * x) + 2
+    return 0.3 ** np.abs(x) * np.sin(4 * x) - np.tanh(2 * x) + 2
 
 # DomFb = [-1, 1]
 def f_b(x1, x2):
