@@ -14,11 +14,11 @@ def main():
     # plt.plot(inter['column1'], inter['column2'], 'b')    
 
 
-    plot_interpolation(inter['c1'], inter['c2'] )
+    plot_interpolation(inter['c1'], inter['c2'])
 
     plot_ground_truth()
 
-    plt.legend(['Interpolación', 'Ground Truth'])
+    plt.legend(['Interpolación', 'Función original'])
 
     plt.show()
 
@@ -29,10 +29,10 @@ def open_csv(file: str = 'mnyo_meduciones', column1: str = 'c1', column2: str = 
     return inter
 
 
-def plot_interpolation(y1: np.ndarray = np.linspace(-1, 1, 100), y2: np.ndarray = np.linspace(-1, 1, 100), points=10, color='r', kind='cubic'):
+def plot_interpolation(y1: np.ndarray = np.linspace(-1, 1, 100), y2: np.ndarray = np.linspace(-1, 1, 100), points=10, color='r', kind='cubic', linestyle='None'):
     x = np.linspace(0, points, points)
     grid = scipy.interpolate.interp1d(x, [y1, y2], kind=kind)
-    plt.plot(grid(np.linspace(0, points, 100))[0], grid(np.linspace(0, points, 100))[1], color)
+    plt.plot(grid(np.linspace(0, points, 100))[0], grid(np.linspace(0, points, 100))[1], color, linestyle=linestyle)
 
 def plot_ground_truth():
     df = open_csv('mnyo_ground_truth')

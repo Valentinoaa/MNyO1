@@ -3,17 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from functions import f_a, f_b
 
-def plot_a(interval: np.ndarray = np.linspace(-4, 4, 1000), grade = range(2, 11)):
+def plot_a(interval: np.ndarray = np.linspace(-4, 4, 100), grade = range(2, 11)):
     plt.figure(figsize=(8, 6))
-    colors = ['r', 'g', 'b', 'c', 'm', 'y', 'k', 'orange', 'purple']  # Lista de 9 colores
-    for n, color in zip(grade, colors):
-        # Create Lagrange polynomial
-        points_a = divide_interval(interval, n)
-        x = scipy.interpolate.lagrange(points_a, f_a(points_a))
-        # Create subplots
-        plt.plot(interval, x(interval), color=color, label=f"Color {color} representa polinomio de Lagrange para {n} puntos")
-        
-    # plt.plot(np.linspace(-4, 4, 100), x(np.linspace(-4, 4, 100)), label='Polinomio interpolante')
     plt.plot(interval, f_a(interval), label= 'Función original', color='black')
     plt.title('Función $f_a(x)$')
     plt.xlabel('x')
@@ -21,21 +12,45 @@ def plot_a(interval: np.ndarray = np.linspace(-4, 4, 1000), grade = range(2, 11)
     plt.legend()  # Muestra la leyenda
     plt.show()
 
-    # Error del grafico
+
+
+
+def interpolated_a(grade = range(2, 11)):
+    interval = np.linspace(-4, 4, 100)
+    plt.figure(figsize=(8, 6))
+    # plt.plot(np.linspace(-4, 4, 100), x(np.linspace(-4, 4, 100)), label='Polinomio interpolante')
+    colors = ['black', 'g', 'b', 'c', 'm', 'y', 'k', 'orange', 'purple']  # Lista de 9 colores
+    for n, color in zip(grade, colors):
+        # Create Lagrange polynomial
+        points_a = divide_interval(interval, n)
+        x = scipy.interpolate.lagrange(points_a, f_a(points_a))
+        # Create subplots
+        plt.plot(interval, x(interval), color=color, label=f"Color {color} representa polinomio de Lagrange para {n} puntos")
+        
+    plt.plot(interval, f_a(interval), label= 'Función original', color='r', linestyle='--')
+    plt.title('Función $f_a(x)$')
+    plt.xlabel('x')
+    plt.ylabel('$f_a(x)$')
+    plt.legend()  # Muestra la leyenda
+    plt.show()
+
+
+def calculate_error(grade = range(2, 11)):
+        # Error del grafico
     plt.figure(figsize=(8, 6))
     errors = []
     for n in range(2, 11):
         points_a = divide_interval(np.linspace(-4, 4, 100), n)
         g = scipy.interpolate.lagrange(points_a, f_a(points_a))
         errors.append(calculate_error(f_a, g, np.linspace(-4, 4, 100)))
+
     errors = np.array(errors)  # Convert errors to a numpy array
-    plt.bar(grade, errors[:, 0])  # Select the first column of errors
+    print(errors)
+    plt.bar(grade, errors)  # Select the first column of errors
     plt.xlabel('Grade')
     plt.ylabel('Error')
     plt.title('Error vs Grade')
     plt.show()
-
-    print(errors)
 
 def plot_b(x1: np.ndarray = np.linspace(-1, 1, 100), x2: np.ndarray = np.linspace(-1, 1, 100)):
     x1_plot_b, x2_plot_b = np.meshgrid(x1, x2)
@@ -135,9 +150,10 @@ def calculate_error(f, g, interval):
     return scipy.integrate.quad(lambda x: abs((f(x) - g(x))), interval[0], interval[-1])
 
 def main():
-    #plot_a()
+    plot_a()
+    interpolated_a([2, 5, 8, 9, 11])
     plot_b()
-    #interpolated_b()
+    interpolated_b()
     interpolateAchevyshev()
     interpolateBchevychev()
 

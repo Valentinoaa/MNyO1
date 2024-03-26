@@ -14,6 +14,7 @@ def main():
 
 
     scd = open_csv('mnyo_mediciones2')
+    
     plot_interpolation(scd["c1"], scd["c2"], 4, 'b')
 
     plt.show()
