@@ -42,7 +42,7 @@ def plot_b(x1: np.ndarray = np.linspace(-1, 1, 100), x2: np.ndarray = np.linspac
     
     fig = plt.figure(figsize=(3, 8))
     ax = fig.add_subplot(111, projection='3d')
-    ax.plot_surface(x1_plot_b, x2_plot_b, f_b(x1_plot_b, x2_plot_b), cmap='viridis')
+    ax.plot_surface(x1_plot_b, x2_plot_b, f_b(x1_plot_b, x2_plot_b), cmap='coolwarm')
     ax.set_title('Función $f_b(x_1, x_2)$')
     ax.set_xlabel('$x_1$')
     ax.set_ylabel('$x_2$')
@@ -51,16 +51,16 @@ def plot_b(x1: np.ndarray = np.linspace(-1, 1, 100), x2: np.ndarray = np.linspac
 
 
 
-def interpolated_b(x1: np.ndarray = np.linspace(-1, 1, 100), x2: np.ndarray = np.linspace(-1, 1, 100)):
+def interpolated_b(x1: np.ndarray = np.linspace(-1, 1, 9), x2: np.ndarray = np.linspace(-1, 1, 9)):
     grid_x, grid_y = np.meshgrid(x1, x2)
     grid_z = scipy.interpolate.griddata((grid_x.flatten(), grid_y.flatten()), f_b(grid_x, grid_y).flatten(), (grid_x, grid_y), method='linear')
     
     f_b(grid_x, grid_y).flatten()
     fig = plt.figure(figsize=(8, 6))
     ax = fig.add_subplot(111, projection='3d')
-    ax.plot_surface(grid_x, grid_y, grid_z)
+    ax.plot_surface(grid_x, grid_y, grid_z, cmap='viridis')
     
-    ax.set_title('Función interpolada con 100 puntos $f_b(x_1, x_2)$')
+    ax.set_title(f'Función interpolada con {len(x1) * len(x2)} puntos $f_b(x_1, x_2)$')
     ax.set_xlabel('$x_1$')
     ax.set_ylabel('$x_2$')
     ax.set_zlabel('$f_b(x_1, x_2)$')
