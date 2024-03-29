@@ -17,28 +17,44 @@ def main():
 
     plot_interpolation(scd["c1"], scd["c2"], 4, 'b')
 
+    f = intersection(fst["c1"], scd["c1"])
 
-    f = intersection(fst["c2"], scd["c2"])
+    h = intersection(fst["c2"], scd["c2"])
 
-    print(f(3))
     plt.show()
 
 
-def intersection(fst, scd):
-    dom_fst = np.linspace(0, 10, len(fst))
-    dom_scd = np.linspace(0, 10, len(scd))
+    start = abs(fst["c2"].min() - scd["c2"].min())
 
-    f = scipy.interpolate.CubicSpline(dom_fst, fst)
-    g = scipy.interpolate.CubicSpline(dom_scd, scd)
+    end = abs(fst["c2"].max() - scd["c2"].max())
+
+
+
+
+def intersection(fst, scd, jacobian = False):
+
+    dom_fst = np.linspace(fst.min(), fst.max(), len(fst))
+
+    dom_scd = np.linspace(scd.min(), scd.max(), len(scd))
+
+    if not jacobian:
+        f = scipy.interpolate.CubicSpline(dom_fst, fst)
+
+        g = scipy.interpolate.CubicSpline(dom_scd, scd)
+    
+    else:
+        f = scipy.interpolate.CubicSpline(dom_fst, fst).derivative()
+
+        g = scipy.interpolate.CubicSpline(dom_scd, scd).derivative()
 
     return lambda x: f(x) - g(x)        
     
 
 def interpolate(y, dom):
 
-    f = scipy.interpolate.CubicSpline(dom, y)
+    f = scipy.interpolate.CubicSpline(x=dom, y=y)
 
-    return f(dom)
+    return lambda x: f(x)
 
 
 if __name__ == "__main__":
