@@ -17,19 +17,55 @@ def main():
 
     plot_interpolation(scd["c1"], scd["c2"], 4, 'b')
 
-    f = intersection(fst["c1"], scd["c1"])
-
-    h = intersection(fst["c2"], scd["c2"])
-
     plt.show()
 
 
-    start = abs(fst["c2"].min() - scd["c2"].min())
+    f = intersection(fst["c1"], scd["c1"])
+    g = intersection(fst["c2"], scd["c2"])
 
-    end = abs(fst["c2"].max() - scd["c2"].max())
+    print(newton(f, g, 0, 0))
 
 
+    # g = interpolate(dom=np.linspace(scd["c1"].min(), scd["c1"].max(), len(scd["c1"])), y=scd["c1"])
+    # h = interpolate(dom=np.linspace(fst["c1"].min(), fst["c1"].max(), len(fst["c1"])), y=fst["c1"])
 
+    for i in np.linspace(scd["c1"].min(), scd["c1"].max(), 100):
+        print(f"X : {g(i)} -> F(x) - G(x): {f(i)} ")
+
+
+def f1(x, dom_x, y, dom_y):
+
+    return interpolate(x=dom_x, y=x) - interpolate(x=dom_x, y=x)
+
+
+def jacobiano(f1, f2 , x, y, tol=1e-6):
+
+    return np.array[[(f1(x + tol , y)) - f1(x, y) / tol, (f1(x, y +tol)- f1(x, y)) / tol],
+                    [(f2(x+tol,y)-f2(x,y)) / tol , (f2(x,y+tol)-f2(x,y))/tol]]
+
+
+def newton(f1, f2, x0, y0, tol=1e-6):
+
+    x = x0
+    y = y0
+
+    while True:
+
+        j = jacobiano(f1, f2, x, y)
+
+        inv_j = np.linalg.inv(j)
+
+        f = np.array([f1(x, y), f2(x, y)])
+
+        x = x - np.dot(inv_j, f)[0]
+
+        y = y - np.dot(inv_j, f)[1]
+
+        if np.linalg.norm(f) < tol:
+            break
+
+    return x, y
+    
 
 def intersection(fst, scd, jacobian = False):
 
