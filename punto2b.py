@@ -17,80 +17,60 @@ def main():
 
     plot_interpolation(scd["c1"], scd["c2"], 4, 'b')
 
-    plt.show()
+    # plt.show()
+
+    global f1, f2, g1, g2
+    f1 = scipy.interpolate.CubicSpline(np.linspace(1, 10, len(fst["c1"])), fst["c1"])
+    f2 = scipy.interpolate.CubicSpline(np.linspace(1, 10, len(scd["c1"])), scd["c1"])
+
+    g1 = scipy.interpolate.CubicSpline(np.linspace(1, 10, len(fst["c2"])), fst["c2"])
+    g2 = scipy.interpolate.CubicSpline(np.linspace(1, 10, len(scd["c2"])), scd["c2"])
+    
+
+    x, y = newton(f, g, 0.1, 0.5)
+
+    print(f"La intersección de las funciones es: [{f1(x)}, {g2(y)}]")
+
+def f(x, y):
+    return f1(x) - f2(y)
+
+def g(x, y):
+    return g1(x) - g2(y)
 
 
-    f = intersection(fst["c1"], scd["c1"])
-    g = intersection(fst["c2"], scd["c2"])
+def jacobiano(f1, f2 , x, y, tolerancia=1e-6):
+    return np.array(
+                    [[(f1(x + tolerancia, y) - f1(x, y)) / tolerancia, (f1(x, y + tolerancia) - f1(x, y)) / tolerancia ], 
+                     [(f2(x + tolerancia, y) - f2(x, y)) / tolerancia, (f2(x, y + tolerancia) - f2(x, y)) / tolerancia ]
+                    ])
 
-    print(newton(f, g, 0, 0))
-
-
-    # g = interpolate(dom=np.linspace(scd["c1"].min(), scd["c1"].max(), len(scd["c1"])), y=scd["c1"])
-    # h = interpolate(dom=np.linspace(fst["c1"].min(), fst["c1"].max(), len(fst["c1"])), y=fst["c1"])
-
-    for i in np.linspace(scd["c1"].min(), scd["c1"].max(), 100):
-        print(f"X : {g(i)} -> F(x) - G(x): {f(i)} ")
-
-
-def f1(x, dom_x, y, dom_y):
-
-    return interpolate(x=dom_x, y=x) - interpolate(x=dom_x, y=x)
-
-
-def jacobiano(f1, f2 , x, y, tol=1e-6):
-
-    return np.array[[(f1(x + tol , y)) - f1(x, y) / tol, (f1(x, y +tol)- f1(x, y)) / tol],
-                    [(f2(x+tol,y)-f2(x,y)) / tol , (f2(x,y+tol)-f2(x,y))/tol]]
-
-
-def newton(f1, f2, x0, y0, tol=1e-6):
+def newton(f1, f2, x0, y0, tol=1e-6, max_iter=1000):
 
     x = x0
     y = y0
 
-    while True:
+    max_iter = 1000
+    tolerancia = 1e-6
 
-        j = jacobiano(f1, f2, x, y)
-
-        inv_j = np.linalg.inv(j)
+    for i in range(max_iter):
+        print(jacobiano(f1,f2,x,y))
+        j_inv = np.linalg.inv(jacobiano(f1, f2, x, y))
 
         f = np.array([f1(x, y), f2(x, y)])
-
-        x = x - np.dot(inv_j, f)[0]
-
-        y = y - np.dot(inv_j, f)[1]
-
-        if np.linalg.norm(f) < tol:
+        p = np.array([x, y]) - j_inv @ f
+        if np.linalg.norm(p - np.array([x, y])) < tolerancia:
             break
+        x, y = p
+
+    if i == max_iter - 1:
+        print("Maximum number of iterations reached")
 
     return x, y
+
     
+def interpolate(inter):
 
-def intersection(fst, scd, jacobian = False):
-
-    dom_fst = np.linspace(fst.min(), fst.max(), len(fst))
-
-    dom_scd = np.linspace(scd.min(), scd.max(), len(scd))
-
-    if not jacobian:
-        f = scipy.interpolate.CubicSpline(dom_fst, fst)
-
-        g = scipy.interpolate.CubicSpline(dom_scd, scd)
-    
-    else:
-        f = scipy.interpolate.CubicSpline(dom_fst, fst).derivative()
-
-        g = scipy.interpolate.CubicSpline(dom_scd, scd).derivative()
-
-    return lambda x: f(x) - g(x)        
-    
-
-def interpolate(y, dom):
-
-    f = scipy.interpolate.CubicSpline(x=dom, y=y)
-
-    return lambda x: f(x)
+    return scipy.interpolate.CubicSpline(inter.index, inter)
 
 
 if __name__ == "__main__":
