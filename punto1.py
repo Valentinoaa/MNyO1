@@ -33,11 +33,12 @@ def lagrange(grade = range(2, 11)):
 
         
     plt.plot(interval, f_a(interval), label= 'Función original', color='black', linestyle='--')
-    plt.title('Función $f_a(x)$')
+    #plt.title('Función $f_a(x)$ interpolada con Lagrange')
     plt.xlabel('x')
     plt.ylabel('$f_a(x)$')
     plt.legend()  # Muestra la leyenda
-
+    plt.grid()
+    #plt.savefig('lagrange.png')
     plt.show()
 
 
@@ -57,10 +58,12 @@ def splines(grade = range(2, 11)):
         plt.plot(interval, x(interval),color=color,label=f"Spline cúbico con {n} puntos")
         plt.plot(points_a, f_a(points_a), 'o', color=color)
 
-    plt.title('Función $f_a(x)$')
+    #plt.title('Función $f_a(x)$ interpolada con Splines')
     plt.xlabel('x')
     plt.ylabel('$f_a(x)$')
     plt.legend()  # Muestra la leyenda
+    plt.grid()
+    #plt.savefig('splines.png')
     plt.show()
 
 def lagrange_splines_equi(grade=8, interval=np.linspace(-4, 4, 1000), mode='normal'):
@@ -85,12 +88,12 @@ def lagrange_splines_equi(grade=8, interval=np.linspace(-4, 4, 1000), mode='norm
     plt.plot(interval, x2(interval), label='Spline cúbico', color='purple')
 
     plt.plot(points_a, f_a(points_a), 'o', color='black', label='Puntos de interpolación')
-    plt.title(f'Función $f_a(x)$ con {grade} puntos')
+    #plt.title(f'Función $f_a(x)$ con {grade} puntos')
     plt.xlabel('x')
     plt.ylabel('$f_a(x)$')
     plt.legend()  # Muestra la leyenda
     plt.grid()
-    #plt.savefig('lagrange_splines_equidistantes.png')
+    plt.savefig('lagrange_splines_equidistantes.png')
     plt.show()
 
 def errores_absolutos_equis(grade = 12):
@@ -382,18 +385,19 @@ def calculate_error(f, g, interval):
     return scipy.integrate.quad(lambda x: abs((f(x) - g(x))), interval[0], interval[-1])[0]
 
 def main():
-    plot_a()
-    lagrange([5, 8])
-    splines([5, 12])
+    # plot_a()
+    #lagrange([5, 8]) #YA GUARDE GRAFICO
+    #splines([5, 12]) #YA GUARDE GRAFICO puntos 
     lagrange_splines_equi(8) #YA GUARDE GRAFICO
 
-    errores_absolutos_equis(8) 
-    errores_absolutos_chebyshev(8)
-    calculate_errors()
-    interpolateAchevyshev()
-    calculate_errors_cheb()
-    comparacion_errores_chebL()
-    comparacion_errores_chebS()
+    # errores_absolutos_equis(8) 
+    # errores_absolutos_chebyshev(8)
+    # calculate_errors()
+    # interpolateAchevyshev()
+
+    # calculate_errors_cheb()
+    # comparacion_errores_chebL()
+    # comparacion_errores_chebS()
     
 
     #plot_b()
