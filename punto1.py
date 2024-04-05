@@ -93,24 +93,25 @@ def lagrange_splines_equi(grade=8, interval=np.linspace(-4, 4, 1000), mode='norm
     plt.ylabel('$f_a(x)$')
     plt.legend()  # Muestra la leyenda
     plt.grid()
-    plt.savefig('lagrange_splines_equidistantes.png')
+    #plt.savefig('lagrange_splines_equidistantes.png')
     plt.show()
 
 def errores_absolutos_equis(grade = 12):
     interval = np.linspace(-4, 4, 1000)
     points_a = divide_interval(interval, grade)
+ 
     g1 = scipy.interpolate.lagrange(points_a, f_a(points_a))
-
     g2 = scipy.interpolate.CubicSpline(points_a, f_a(points_a))
-    
+ 
     plt.figure(figsize=(8, 6))
-    plt.plot(interval, abs(f_a(interval)-g1(interval)), label='Error de Lagrange', color='g')
-    plt.plot(interval, abs(f_a(interval)-g2(interval)), label='Error de Splines', color='purple')
+    plt.plot(interval, abs(f_a(interval)-g1(interval)), label='Error de Lagrange en puntos equidistantes', color='g')
+    plt.plot(interval, abs(f_a(interval)-g2(interval)), label='Error de Splines en puntos equidistantes', color='purple') 
     plt.xlabel('x')
     plt.ylabel('Error')
-    plt.title('Errores absolutos de Lagrange y Splines en puntos equidistantes')
+    #plt.title('Errores absolutos de Lagrange y Splines en puntos equidistantes')
     plt.legend()
     plt.grid()
+    plt.savefig('errores_absolutos_equis.png')
     plt.show()
 def errores_absolutos_chebyshev(grade = 12):
     interval = np.linspace(-4, 4, 1000)
@@ -124,9 +125,10 @@ def errores_absolutos_chebyshev(grade = 12):
     plt.plot(interval, abs(f_a(interval)-g2(interval)), label='Error de Splines', color='purple')
     plt.xlabel('x')
     plt.ylabel('Error')
-    plt.title('Errores absolutos de Lagrange y Splines en puntos de Chebyshev')
+    #plt.title('Errores absolutos de Lagrange y Splines en puntos de Chebyshev')
     plt.legend()
     plt.grid()
+    plt.savefig('errores_absolutos_chebyshev.png')
     plt.show()
         
     
@@ -191,18 +193,19 @@ def calculate_errors_cheb(grade = range(2, 14)):
 def plot_b(x1: np.ndarray = np.linspace(-1, 1, 100), x2: np.ndarray = np.linspace(-1, 1, 100)):
     x1_plot_b, x2_plot_b = np.meshgrid(x1, x2)
     
-    fig = plt.figure(figsize=(3, 8))
+    fig = plt.figure(figsize=(8, 6))
     ax = fig.add_subplot(111, projection='3d')
     ax.plot_surface(x1_plot_b, x2_plot_b, f_b(x1_plot_b, x2_plot_b), cmap='coolwarm')
-    ax.set_title('Función $f_b(x_1, x_2)$')
+    #ax.set_title('Función $f_b(x_1, x_2)$')
     ax.set_xlabel('$x_1$')
     ax.set_ylabel('$x_2$')
     ax.set_zlabel('$f_b(x_1, x_2)$')
+    #plt.savefig('funcion_b.png')
     plt.show()
 
 
 
-def interpolated_b(x1: np.ndarray = np.linspace(-1, 1, 9), x2: np.ndarray = np.linspace(-1, 1, 9)):
+def interpolated_b(x1: np.ndarray = np.linspace(-1, 1, 100), x2: np.ndarray = np.linspace(-1, 1, 100)):
     grid_x, grid_y = np.meshgrid(x1, x2)
     grid_z = scipy.interpolate.griddata((grid_x.flatten(), grid_y.flatten()), f_b(grid_x, grid_y).flatten(), (grid_x, grid_y), method='cubic')
     
@@ -211,10 +214,11 @@ def interpolated_b(x1: np.ndarray = np.linspace(-1, 1, 9), x2: np.ndarray = np.l
     ax = fig.add_subplot(111, projection='3d')
     ax.plot_surface(grid_x, grid_y, grid_z, cmap='viridis')
     
-    ax.set_title(f'Función interpolada con {len(x1) * len(x2)} puntos $f_b(x_1, x_2)$')
+    #ax.set_title(f'Función interpolada con {len(x1) * len(x2)} puntos $f_b(x_1, x_2)$')
     ax.set_xlabel('$x_1$')
     ax.set_ylabel('$x_2$')
     ax.set_zlabel('$f_b(x_1, x_2)$')
+    #plt.savefig('interpolacion_b.png')
     plt.show()
 
 
@@ -245,16 +249,18 @@ def interpolateAchevyshev(grade=13):
     f_cheb = f_a(x) 
     f_interL = scipy.interpolate.lagrange(x, f_cheb)
     f_interS = scipy.interpolate.CubicSpline(x, f_cheb)
-    xx = np.linspace(-4, 4, 300)
+    xx = np.linspace(-4, 4, 1000)
     plt.figure(figsize=(8, 6))
     plt.plot(x, f_cheb, label='Chebyshev nodes', marker='o', color='black', linestyle='None')
     plt.plot(xx, f_interL(xx), label='Funcion interpolada con Lagrange', color='g')  
     plt.plot(xx, f_interS(xx), label='Funcion interpolada con Spline', color='purple')
     plt.plot(xx, f_a(xx), label='Función original', color='black', linestyle='--')
-    plt.title('Función interpolada con Chebyshev')
+    #plt.title('Función interpolada con Chebyshev')
     plt.xlabel('x')
     plt.ylabel('$f_a(x)$')
     plt.legend()
+    plt.grid()
+    #plt.savefig('interpolacion_chebyshev.png')
     plt.show()
 
 def interpolateBchevychev(x1: np.ndarray = np.linspace(-1, 1, 100), x2: np.ndarray = np.linspace(-1, 1, 100)):
@@ -270,52 +276,54 @@ def interpolateBchevychev(x1: np.ndarray = np.linspace(-1, 1, 100), x2: np.ndarr
     grid_z = scipy.interpolate.griddata((x1.flatten(), x2.flatten()), f_b(x1, x2).flatten(), (x1, x2), method='linear')
 
     # Plotting
-    fig = plt.figure(figsize=(12, 6))
+    fig = plt.figure(figsize=(8, 6))
 
     # Original function subplot
-    ax = fig.add_subplot(121, projection='3d')
-    ax.plot_surface(x1_plot_b, x2_plot_b, f_b(x1_plot_b, x2_plot_b), edgecolor='none', alpha=0.8, antialiased=True)
-    ax.set_title('Original function $f_b(x_1, x_2)$')
-    ax.set_xlabel('$x_1$')
-    ax.set_ylabel('$x_2$')
-    ax.set_zlabel('$f_b(x_1, x_2)$')
+
 
     # Interpolated function subplot
-    ay = fig.add_subplot(122, projection='3d')
+    ay = fig.add_subplot(111, projection='3d')
     ay.plot_surface(x1, x2, grid_z, cmap='viridis', edgecolor='none', alpha=0.8, antialiased=True)
-    ay.set_title('Interpolated function with Chebyshev nodes $f_b(x_1, x_2)$')
+    #ay.set_title('Funcion interpolada con raíces de Chebyshev $f_b(x_1, x_2)$')
     ay.set_xlabel('$x_1$')
     ay.set_ylabel('$x_2$')
     ay.set_zlabel('$f_b(x_1, x_2)$')
-
-    plt.tight_layout()
+    #plt.savefig('interpolacion_chebyshev_b.png')
     plt.show()
     
-    plt.show()
+ 
 
 
-def error_b_cheb(nodes_range = range(2, 21)):
-    errors = []
+def error_b_cheb(nodes_range = range(2, 30)):
+    errors_cheb = []
+    errors_no_cheb = []
+    puntos_grafico_x1, puntos_grafico_x2 = np.meshgrid(np.linspace(-1, 1, 100), np.linspace(-1, 1, 100))
     for n in nodes_range:
-        x1 = chebyshev_roots(-1, 1, n)
-        x2 = chebyshev_roots(-1, 1, n)
-        # Create meshgrid
-        x1, x2 = np.meshgrid(x1, x2)
+        x1, x2 = np.meshgrid(np.linspace(-1, 1, n), np.linspace(-1, 1, n))
+        x1_cheb, x2_cheb = np.meshgrid(chebyshev_roots(-1, 1, n), chebyshev_roots(-1, 1, n))
+
+        f_b_values = f_b(x1, x2)
+        f_b_values_cheb = f_b(x1_cheb, x2_cheb)
         # Generate interpolated values
-        grid_z = scipy.interpolate.griddata((x1.flatten(), x2.flatten()), f_b(x1, x2).flatten(), (x1, x2), method='linear')
+        grid_z_cheb = scipy.interpolate.griddata((x1_cheb.flatten(), x2_cheb.flatten()), f_b_values_cheb.flatten(), (puntos_grafico_x1, puntos_grafico_x2), method='cubic')
+        grid_z_noCheb = scipy.interpolate.griddata((x1.flatten(), x2.flatten()), f_b_values.flatten(), (puntos_grafico_x1, puntos_grafico_x2), method='cubic')
         # Calculate error
-        error = np.abs(f_b(x1, x2) - grid_z)
-        
+        error = np.abs(f_b(puntos_grafico_x1, puntos_grafico_x2) - grid_z_noCheb)
+        error_cheb = np.abs(f_b(puntos_grafico_x1, puntos_grafico_x2) - grid_z_cheb)
         # Append error to list
-        errors.append(np.mean(error))
+        errors_no_cheb.append(np.max(error))
+        errors_cheb.append(np.max(error_cheb))
     x = np.arange(len(nodes_range))
     plt.figure(figsize=(8, 6))
-    plt.bar(x, errors, width=0.4, label='Error', color='purple')
-    plt.xlabel('Node Quantity')
+    plt.plot(x, errors_no_cheb, label='Error puntos equiespaciados', color='g')
+    plt.plot(x, errors_cheb, label='Error con Chebyshev', color='purple')
+    plt.xlabel('Cantidad de puntos')
     plt.ylabel('Error')
-    plt.title('Error vs Node Quantity')
+    #plt.title('Error vs Node Quantity')
     plt.xticks(x, nodes_range)
     plt.legend()
+    plt.grid()
+    #plt.savefig('error_b.png')
     plt.show()
 
 
@@ -388,12 +396,12 @@ def main():
     # plot_a()
     #lagrange([5, 8]) #YA GUARDE GRAFICO
     #splines([5, 12]) #YA GUARDE GRAFICO puntos 
-    lagrange_splines_equi(8) #YA GUARDE GRAFICO
+    #lagrange_splines_equi(8) #YA GUARDE GRAFICO
 
-    # errores_absolutos_equis(8) 
-    # errores_absolutos_chebyshev(8)
-    # calculate_errors()
-    # interpolateAchevyshev()
+    # errores_absolutos_equis(8) #Ya guarde grafico
+    # errores_absolutos_chebyshev(8) #Ya guarde grafico
+    # calculate_errors()#Ya guarde grafico
+    #interpolateAchevyshev()
 
     # calculate_errors_cheb()
     # comparacion_errores_chebL()
@@ -402,7 +410,7 @@ def main():
 
     #plot_b()
     #interpolated_b()
-    #error_b_cheb()
+    error_b_cheb()
     #interpolateBchevychev()
 
 
