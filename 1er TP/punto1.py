@@ -33,12 +33,11 @@ def lagrange(grade = range(2, 11)):
 
         
     plt.plot(interval, f_a(interval), label= 'Función original', color='black', linestyle='--')
-    #plt.title('Función $f_a(x)$ interpolada con Lagrange')
+    plt.title('Función $f_a(x)$')
     plt.xlabel('x')
     plt.ylabel('$f_a(x)$')
     plt.legend()  # Muestra la leyenda
-    plt.grid()
-    #plt.savefig('lagrange.png')
+
     plt.show()
 
 
@@ -58,12 +57,10 @@ def splines(grade = range(2, 11)):
         plt.plot(interval, x(interval),color=color,label=f"Spline cúbico con {n} puntos")
         plt.plot(points_a, f_a(points_a), 'o', color=color)
 
-    #plt.title('Función $f_a(x)$ interpolada con Splines')
+    plt.title('Función $f_a(x)$')
     plt.xlabel('x')
     plt.ylabel('$f_a(x)$')
     plt.legend()  # Muestra la leyenda
-    plt.grid()
-    #plt.savefig('splines.png')
     plt.show()
 
 def lagrange_splines_equi(grade=8, interval=np.linspace(-4, 4, 1000), mode='normal'):
@@ -79,7 +76,7 @@ def lagrange_splines_equi(grade=8, interval=np.linspace(-4, 4, 1000), mode='norm
     None
     """
 
-    plt.figure(figsize=(8, 6))
+    plt.figure(figsize=(10, 6))
     plt.plot(interval, f_a(interval), label='Función original', color='black', linestyle='--')
     points_a = divide_interval(interval, grade)
     x = scipy.interpolate.lagrange(points_a, f_a(points_a))
@@ -88,15 +85,17 @@ def lagrange_splines_equi(grade=8, interval=np.linspace(-4, 4, 1000), mode='norm
     plt.plot(interval, x2(interval), label='Spline cúbico', color='purple')
 
     plt.plot(points_a, f_a(points_a), 'o', color='black', label='Puntos de interpolación')
-    #plt.title(f'Función $f_a(x)$ con {grade} puntos')
     plt.xlabel('x')
     plt.ylabel('$f_a(x)$')
     plt.legend()  # Muestra la leyenda
     plt.grid()
-    plt.savefig('lagrange_splines_equidistantes.png')
+    #plt.savefig('lagrange_splines_equidistantes.png')
     plt.show()
 
+
+
 def errores_absolutos_equis(grade = 12):
+
     interval = np.linspace(-4, 4, 1000)
     points_a = divide_interval(interval, grade)
     g1 = scipy.interpolate.lagrange(points_a, f_a(points_a))
@@ -112,6 +111,28 @@ def errores_absolutos_equis(grade = 12):
     plt.legend()
     plt.grid()
     plt.show()
+
+def chebyshev_difference(grade = 8):
+
+    interval = np.linspace(-4, 4, 100)
+    points_a = divide_interval(interval, grade)
+
+    g1 = scipy.interpolate.lagrange(points_a, f_a(points_a))
+
+    g2 = scipy.interpolate.lagrange(np.linspace(-4,4,grade), f_a(np.linspace(-4,4,grade)))
+    
+    plt.figure(figsize=(8, 6))
+
+    plt.plot(interval, abs(f_a(interval)-g1(interval)), label='Error con Chebyshev', color='purple')
+    plt.plot(interval, abs(f_a(interval)-g2(interval)), label='Error con nodos equiespaciados', color='g')
+    plt.xlabel('x')
+    plt.ylabel('Error')
+    plt.title('Errores absolutos de Lagrange y Splines en puntos equidistantes')
+    plt.legend()
+    plt.grid()
+    plt.show()
+
+
 def errores_absolutos_chebyshev(grade = 12):
     interval = np.linspace(-4, 4, 1000)
     points_a = chebyshev_roots(-4, 4, grade)
@@ -132,7 +153,7 @@ def errores_absolutos_chebyshev(grade = 12):
     
 
 
-def calculate_errors(grade = range(2, 14)):
+def calculate_errors(grade = range(4, 13)):
     # Error de Lagranfe
     errors = []
     for n in grade:
@@ -152,9 +173,8 @@ def calculate_errors(grade = range(2, 14)):
     plt.figure(figsize=(8, 6))
     plt.bar(x, lagrange_errors, width=0.4, label='Error de Lagrange ', color='g')
     plt.bar(x + 0.4, spline_errors, width=0.4, label='Error de Splines ', color='purple')
-    plt.xlabel('Grado')
+    plt.xlabel('Cantidad de nodos')
     plt.ylabel('Error')
-    plt.title('Error vs Grado')
     plt.xticks(x, grade)
     plt.legend()
 
@@ -202,7 +222,7 @@ def plot_b(x1: np.ndarray = np.linspace(-1, 1, 100), x2: np.ndarray = np.linspac
 
 
 
-def interpolated_b(x1: np.ndarray = np.linspace(-1, 1, 9), x2: np.ndarray = np.linspace(-1, 1, 9)):
+def interpolated_b(x1: np.ndarray = np.linspace(-1, 1, 8), x2: np.ndarray = np.linspace(-1, 1, 8)):
     grid_x, grid_y = np.meshgrid(x1, x2)
     grid_z = scipy.interpolate.griddata((grid_x.flatten(), grid_y.flatten()), f_b(grid_x, grid_y).flatten(), (grid_x, grid_y), method='cubic')
     
@@ -211,7 +231,6 @@ def interpolated_b(x1: np.ndarray = np.linspace(-1, 1, 9), x2: np.ndarray = np.l
     ax = fig.add_subplot(111, projection='3d')
     ax.plot_surface(grid_x, grid_y, grid_z, cmap='viridis')
     
-    ax.set_title(f'Función interpolada con {len(x1) * len(x2)} puntos $f_b(x_1, x_2)$')
     ax.set_xlabel('$x_1$')
     ax.set_ylabel('$x_2$')
     ax.set_zlabel('$f_b(x_1, x_2)$')
@@ -300,20 +319,20 @@ def error_b_cheb(nodes_range = range(2, 21)):
         x1 = chebyshev_roots(-1, 1, n)
         x2 = chebyshev_roots(-1, 1, n)
         # Create meshgrid
-        x1, x2 = np.meshgrid(x1, x2)
+        x1_inter, x2_inter = np.meshgrid(x1, x2)
         # Generate interpolated values
-        grid_z = scipy.interpolate.griddata((x1.flatten(), x2.flatten()), f_b(x1, x2).flatten(), (x1, x2), method='linear')
+        grid_z = scipy.interpolate.griddata((x1_inter.flatten(), x2_inter.flatten()), f_b(x1_inter, x2_inter).flatten(), (x1_inter, x2_inter), method='cubic')
         # Calculate error
-        error = np.abs(f_b(x1, x2) - grid_z)
+        error = np.max(np.abs(f_b(x1, x2) - grid_z))
         
         # Append error to list
-        errors.append(np.mean(error))
+        errors.append(error)
     x = np.arange(len(nodes_range))
     plt.figure(figsize=(8, 6))
-    plt.bar(x, errors, width=0.4, label='Error', color='purple')
-    plt.xlabel('Node Quantity')
-    plt.ylabel('Error')
-    plt.title('Error vs Node Quantity')
+    plt.bar(x, errors, width=0.4, label='Maximos Errores', color='purple')
+    plt.xlabel('CAntidad nodos')
+    plt.ylabel('Maximos error')
+    plt.title(' vs Node Quantity')
     plt.xticks(x, nodes_range)
     plt.legend()
     plt.show()
@@ -386,23 +405,23 @@ def calculate_error(f, g, interval):
 
 def main():
     # plot_a()
-    #lagrange([5, 8]) #YA GUARDE GRAFICO
-    #splines([5, 12]) #YA GUARDE GRAFICO puntos 
-    lagrange_splines_equi(8) #YA GUARDE GRAFICO
+    # lagrange([5, 8])
+    # splines([5, 12])
+    # lagrange_splines_equi(9) #YA GUARDE GRAFICO
 
     # errores_absolutos_equis(8) 
-    # errores_absolutos_chebyshev(8)
+    # errores_absolutos_chebyshev(10)
+    # chebyshev_difference(8)
     # calculate_errors()
     # interpolateAchevyshev()
-
     # calculate_errors_cheb()
     # comparacion_errores_chebL()
     # comparacion_errores_chebS()
     
 
     #plot_b()
-    #interpolated_b()
-    #error_b_cheb()
+    interpolated_b()
+    # error_b_cheb()
     #interpolateBchevychev()
 
 

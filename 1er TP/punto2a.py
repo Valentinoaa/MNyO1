@@ -7,12 +7,12 @@ def main():
 
     inter = open_csv('mnyo_mediciones', 'c1', 'c2')
 
-    plt.xlabel('Coordenada X')
-    plt.ylabel('Coordenada Y')
+    plt.xlabel('Coordenada X1')
+    plt.ylabel('Coordenada X2')
 
     # plt.plot(inter['c1'], inter['c2'], 'b')    
 
-    plot_interpolation(inter['c1'], inter['c2'], linestyle='dashed')
+    plot_interpolation(inter['c1'], inter['c2'])
 
     plot_ground_truth()
 
@@ -28,7 +28,7 @@ def open_csv(file: str = 'mnyo_meduciones', column1: str = 'c1', column2: str = 
     return inter
 
 
-def plot_interpolation(y1: np.ndarray = np.linspace(-1, 1, 100), y2: np.ndarray = np.linspace(-1, 1, 100), points=10, color='r', kind='cubic', linestyle='solid'):
+def plot_interpolation(y1: np.ndarray = np.linspace(-1, 1, 100), y2: np.ndarray = np.linspace(-1, 1, 100), points=10, color='g', kind='cubic', linestyle='solid'):
     x = np.linspace(0, points, points)
     # F(x) -> y1, y2
     # [0, 1, 2 .. 10]
@@ -37,7 +37,7 @@ def plot_interpolation(y1: np.ndarray = np.linspace(-1, 1, 100), y2: np.ndarray 
 
 def plot_ground_truth():
     df = open_csv('mnyo_ground_truth')
-    plt.plot(df['c1'], df['c2'], 'b')
+    plt.plot(df['c1'], df['c2'], 'black', linestyle='dashed')
 
 
 

@@ -11,13 +11,17 @@ def main():
 
     fst = open_csv('mnyo_mediciones')
 
-    plot_interpolation(fst["c1"], fst["c2"])
+    plot_interpolation(fst["c1"], fst["c2"], color='purple')
 
     scd = open_csv('mnyo_mediciones2')
 
-    plot_interpolation(scd["c1"], scd["c2"], 4, 'b')
+    plot_interpolation(scd["c1"], scd["c2"], 4, 'g')
 
-    # plt.show()
+    plt.xlabel('Coordenada X1')
+    plt.ylabel('Coordenada X2')
+
+
+    plt.show()
 
     global f1, f2, g1, g2
     f1 = scipy.interpolate.CubicSpline(np.linspace(1, 10, len(fst["c1"])), fst["c1"])
