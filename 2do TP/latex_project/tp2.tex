@@ -1,0 +1,84 @@
+\documentclass[12pt,a4]{article} %[font size, tamano de hoja]{Tipo de documento}
+
+\usepackage[left=1.8cm,right=1.8cm,top=32mm,columnsep=20pt]{geometry}
+
+\usepackage[utf8]{inputenc} %Formato de codificación
+\usepackage[spanish, es-tabla, es-nodecimaldot]{babel}
+\usepackage{amsmath} %paquete para escribir ecuaciones matemáticas
+\usepackage{float} %Para posicionar figuras
+\usepackage{graphicx} %Para poder poner figuras
+\usepackage{hyperref} %Permite usar hipervínculos 
+\usepackage{multicol} %Para hacer doble columna
+\usepackage[sorting=none]{biblatex} %Imports biblatex package. To cite use \cite{reference_label}
+\addbibresource{tp2.bib} %Import the bibliography file
+
+
+
+\title{Métodos Numéricos y Optimización\\
+
+ Trabajo práctico N$^{\circ}$2\\
+\vspace{20mm}
+
+ Insertar nombre
+ 
+}
+
+\author{Valentino Arbelaiz y Alejo Zimmermann\\ [2mm] %\\ para nueva línea
+\small Universidad de San Andrés, Buenos Aires, Argentina}
+\date{1er Semestre 2024}
+% Tamanos de letra: 
+% \tiny	
+% \scriptsize
+% \footnotesize
+% \small	
+% \normalsize	
+% \large	
+% \Large	
+% \LARGE	
+% \huge	
+% \Huge
+
+
+%Todo lo que está antes de begin{document} es el preámbulo
+\begin{document}
+\vspace{1cm} % Ajusta la distancia vertical entre la fecha y la imagen
+
+
+
+\maketitle
+% \begin{center}
+% \includegraphics[width=5cm]{logoUdesa.png} % Ajusta la ruta y el tamaño de la imagen
+% \end{center}
+
+
+\begin{abstract}
+ 
+\vspace{2mm}
+\end{abstract}
+
+\begin{multicols}{2}
+\raggedcolumns
+
+\section{Introducción}
+
+\section{Métodos\cite{burdenfaires}}
+
+\section{Implementación}
+
+\section{Resultados y análisis}
+
+\section{Conclusión}
+
+
+\appendix
+
+
+
+
+\end{multicols}
+
+\printbibliography
+
+
+
+\end{document}
