@@ -14,13 +14,13 @@
 
 
 
-\title{Métodos Numéricos y Optimización\\
+\title{Análisis Numérico de Modelos de Dinámica Poblacional: Crecimiento Exponencial y Logístico, Competencia de Lotka-Volterra y Predador-Presa\\
 
- Trabajo práctico N$^{\circ}$2\\
+
 \vspace{20mm}
 
- Insertar nombre
- 
+ Métodos Numéricos y Optimización\\
+ Trabajo práctico N$^{\circ}$2\\
 }
 
 \author{Valentino Arbelaiz y Alejo Zimmermann\\ [2mm] %\\ para nueva línea
@@ -52,16 +52,25 @@
 
 
 \begin{abstract}
- 
+
 \vspace{2mm}
 \end{abstract}
 
+ En este informe se presentó un análisis numérico de diversos modelos de dinámica poblacional utilizados para representar el crecimiento y la interacción entre especies en ecosistemas. Se examinaron los modelos de crecimiento exponencial y logístico, comparando sus soluciones analíticas y numéricas, y evaluando el impacto de los parámetros en el comportamiento poblacional. Se abordó el modelo de competencia de Lotka-Volterra, identificando puntos de equilibrio y analizando trayectorias poblacionales bajo diferentes condiciones iniciales y parámetros. Además, se investigó el modelo predador-presa de Lotka-Volterra y su extensión con competencia intraespecífica de presas, explorando las dinámicas resultantes y los puntos de equilibrio en el plano de fase. Se emplearon diversos métodos numéricos(DETALLAR METODOS) para resolver las ecuaciones diferenciales, comparando los resultados con soluciones analíticas disponibles. Este estudio buscó comprender los fundamentos y el comportamiento de estos modelos.\\
 \begin{multicols}{2}
 \raggedcolumns
 
 \section{Introducción}
-
-\section{Métodos\cite{burdenfaires}}
+ El estudio de la dinámica de poblaciones es un área fundamental en ecología y biología, ya que nos permite comprender cómo evolucionan y se relacionan las diferentes especies dentro de un ecosistema. A lo largo de los años, se han desarrollado diversos modelos matemáticos para representar estos procesos, desde los más simples hasta los más complejos.\\
+ 
+ En este informe, nos centraremos en el análisis numérico de algunos de los modelos más importantes en la dinámica de poblaciones. Comenzaremos con los modelos de crecimiento exponencial y logístico, que describen el crecimiento de una sola especie en un sistema cerrado. Estos modelos son fundamentales para entender los conceptos básicos de la dinámica de poblaciones y nos permitirán explorar las diferencias entre un crecimiento ilimitado y uno limitado por la disponibilidad de recursos.\\
+ 
+ Luego, abordaremos el modelo de competencia de Lotka-Volterra, que incorpora la interacción entre dos especies que compiten por los mismos recursos. Este modelo nos ayudará a comprender cómo la competencia intraespecífica e interespecífica afecta la dinámica de las poblaciones y cómo se determinan los puntos de equilibrio en el sistema.\\
+ 
+ Finalmente, estudiaremos el modelo predador-presa de Lotka-Volterra y su extensión, que considera la relación entre una especie depredadora y su presa, así como la competencia intraespecífica de las presas. Estos modelos son fundamentales para entender las interacciones tróficas y los ciclos de oscilación en las poblaciones de depredadores y presas.\\
+ 
+ A lo largo del informe, utilizaremos métodos numéricos para resolver las ecuaciones diferenciales involucradas en estos modelos y compararemos los resultados obtenidos con las soluciones analíticas cuando estén disponibles. Esto nos permitirá evaluar la precisión y eficiencia de los métodos numéricos en la resolución de estos problemas.
+\section{Métodos}
 
 \section{Implementación}
 
