@@ -56,7 +56,7 @@
 \vspace{2mm}
 \end{abstract}
 
- En este informe se presentó un análisis numérico de diversos modelos de dinámica poblacional utilizados para representar el crecimiento y la interacción entre especies en ecosistemas. Se examinaron los modelos de crecimiento exponencial y logístico, comparando sus soluciones analíticas y numéricas, y evaluando el impacto de los parámetros en el comportamiento poblacional. Se abordó el modelo de competencia de Lotka-Volterra, identificando puntos de equilibrio y analizando trayectorias poblacionales bajo diferentes condiciones iniciales y parámetros. Además, se investigó el modelo predador-presa de Lotka-Volterra y su extensión con competencia intraespecífica de presas, explorando las dinámicas resultantes y los puntos de equilibrio en el plano de fase. Se emplearon diversos métodos numéricos(DETALLAR METODOS) para resolver las ecuaciones diferenciales, comparando los resultados con soluciones analíticas disponibles. Este estudio buscó comprender los fundamentos y el comportamiento de estos modelos.\\
+ En este informe se presentó un análisis numérico de diversos modelos de dinámica poblacional utilizados para representar el crecimiento y la interacción entre especies en ecosistemas. Se examinaron los modelos de crecimiento exponencial y logístico, comparando sus soluciones analíticas y numéricas, y evaluando el impacto de los parámetros en el comportamiento poblacional. Se abordó el modelo de competencia de Lotka-Volterra, identificando puntos de equilibrio y analizando trayectorias poblacionales bajo diferentes condiciones iniciales y parámetros. Además, se investigó el modelo predador-presa de Lotka-Volterra y su extensión con competencia intraespecífica de presas, explorando las dinámicas resultantes y los puntos de equilibrio en el plano de fase. Se emplearon diversos métodos numéricos como el metodo de Euler y el metodo de Runge Kutta de orden cuatro para resolver las ecuaciones diferenciales, comparando los resultados con soluciones analíticas disponibles. Este estudio buscó comprender los fundamentos y el comportamiento de estos modelos.\\
 \begin{multicols}{2}
 \raggedcolumns
 
@@ -70,8 +70,63 @@
  Finalmente, estudiaremos el modelo predador-presa de Lotka-Volterra y su extensión, que considera la relación entre una especie depredadora y su presa, así como la competencia intraespecífica de las presas. Estos modelos son fundamentales para entender las interacciones tróficas y los ciclos de oscilación en las poblaciones de depredadores y presas.\\
  
  A lo largo del informe, utilizaremos métodos numéricos para resolver las ecuaciones diferenciales involucradas en estos modelos y compararemos los resultados obtenidos con las soluciones analíticas cuando estén disponibles. Esto nos permitirá evaluar la precisión y eficiencia de los métodos numéricos en la resolución de estos problemas.
-\section{Métodos}
+\section{Métodos de resolución de ecuaciones diferenciales}
 
+\subsection{Metodo de Euler}
+ El método de Euler es uno de los métodos más simples para resolver ecuaciones diferenciales ordinarias (ODE).\\
+ Sea una ODE bien condicionada:
+    \begin{equation}
+        y' = \frac{dy}{dt} = f(t,y),  a \leq t \leq b
+    \end{equation}
+ El objetivo del método de Euler es aproximar la solución de la ODE en un intervalo $[a,b]$ dividiéndolo en $N$ subintervalos de igual tamaño $h = \frac{b-a}{N}$. Así quedan $N + 1$ puntos equiespaciados. Se asume que la solución $y(t)$ tiene su derivada segunda continua en $[a,b]$.\\ 
+ El tiempo en el paso $i$ se denota como:
+    
+        $t_i = a + i \cdot h, \forall i = 1, ..., N$\\
+ Este método se basa en construir una sucesión discreta de de valores ${w}$ que aproximan la solución $y(t)$ entonces $ w_i \approx y(t_i), \forall i = 1, ..., N$ donde $w_0 = y(a)$.\\
+La sucesión se construye de la siguiente manera utilizando el método de Euler explicito:
+    \begin{equation}
+        w_{i+1} = w_i + h \cdot f(t_i, w_i)
+    \end{equation}
+
+\subsection{Metodo de Runge Kutta}
+El método de Runge-Kutta es otro método numérico utilizado para resolver ecuaciones diferenciales ordinarias. Se basa en la expansión de la solución en una serie de Taylor. El método de Runge-Kutta de cuarto orden es uno de los más utilizados y se define de la siguiente manera:
+
+Sea una ODE bien condicionada:
+\begin{equation}
+    y' = \frac{dy}{dt} = f(t,y), \quad a \leq t \leq b
+\end{equation}
+
+
+El objetivo del método de Runge-Kutta es aproximar la solución de la ODE en un intervalo $[a,b]$ dividiéndolo en $N$ subintervalos de igual tamaño $h = \frac{b-a}{N}$. Así quedan $N + 1$ puntos equiespaciados. Se asume que la solución $y(t)$ tiene su derivada segunda continua en $[a,b]$.
+
+
+
+El tiempo en el paso $i$ se denota como:
+
+
+
+
+\begin{equation}
+    t_i = a + i \cdot h, \quad \forall i = 1, ..., N
+\end{equation}
+
+
+
+
+El método de Runge-Kutta de cuarto orden se define mediante las siguientes ecuaciones:
+
+\begin{align}
+    k_1 &= h \cdot f(t_i, w_i) \\
+    k_2 &= h \cdot f(t_i + \frac{h}{2}, w_i + \frac{k_1}{2}) \\
+    k_3 &= h \cdot f(t_i + \frac{h}{2}, w_i + \frac{k_2}{2}) \\
+    k_4 &= h \cdot f(t_i + h, w_i + k_3) \\
+    w_{i+1} &= w_i + \frac{1}{6}(k_1 + 2k_2 + 2k_3 + k_4)
+\end{align}
+
+donde $w_i$ es la aproximación de la solución en el paso $i$.
+
+
+ 
 \section{Implementación}
 
 \section{Resultados y análisis}
