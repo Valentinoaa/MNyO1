@@ -42,9 +42,6 @@ def plot_isoclines():
 
 
 def plot_vector_field():
-    # Constants
-    r1 = r2 = 1
-
     # Grid for N1 and N2
     N1 = np.linspace(1, 150, 20)
     N2 = np.linspace(1, 150, 20)
@@ -60,11 +57,16 @@ def plot_vector_field():
 
         # Compute magnitude for color coding
         magnitude = np.sqrt(dN1_dt**2 + dN2_dt**2)
-        plt.quiver(N1_grid, N2_grid, dN1_dt, dN2_dt, magnitude, scale=600, cmap='viridis', width=0.003)
+        
+        plt.quiver(N1_grid, N2_grid, dN1_dt, dN2_dt, magnitude, scale=700, cmap='viridis', width=0.003)
+        N1_zero_isocline = K1 - params["alpha"] * N2  # Isoclina cero para la especie 1
+        N2_zero_isocline = K2 - params["beta"] * N1  # Isoclina cero para la especie 2
 
+        plt.plot(N1, N2_zero_isocline, label='Isoclina cero para la especie 2 ($dN_1/dt = 0$)', color='blue')
+        plt.plot(N1_zero_isocline, N2, label='Isoclina cero para la especie 1 ($dN_2/dt = 0$)', color='green')
         plt.xlabel('N1 (Population of Species 1)')
         plt.ylabel('N2 (Population of Species 2)')
-        plt.title(f'Vector Field for Case {i}: α12={params["alpha"]}, α21={params["beta"]}')
+        plt.title(f'Vector Field for Case {i}: alpha={params["alpha"]}, beta={params["beta"]}')
         plt.grid(True)
         plt.xlim([0, K1])
         plt.ylim([0, K2])
