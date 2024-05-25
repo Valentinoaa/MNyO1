@@ -2,12 +2,12 @@
 import matplotlib.pyplot as plt
 import numpy as np
 cases = {
-        "Caso 1": {"alpha": 0.5, "beta": 0.2},
+        "Caso 1": {"alpha": 0.5, "beta": 0.5},
         "Caso 2": {"alpha": 2, "beta": 0.1},
-        "Caso 3": {"alpha": .1, "beta": 2},
-        "Caso 4": {"alpha": 1.7, "beta": 2}
+        "Caso 3": {"alpha": 1, "beta": 1},
+        "Caso 4": {"alpha": 1.6, "beta": 1.6}
     }
-K1, K2 = 100, 100 
+K1, K2 = 100, 150 
 r1, r2 = 1, 1
 
 def plot_isoclines():
